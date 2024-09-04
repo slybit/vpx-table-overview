@@ -30,6 +30,8 @@ const listVPXTableFiles = () => {
 
 const getVPXTableDetails = (filename) => {
 
+    console.log('Getting details for %s', filename);
+
     const details = {
         fileName: filename
     };
@@ -50,14 +52,14 @@ const getVPXTableDetails = (filename) => {
     }
 
     let tableName = CFB.find(cfb, 'Root Entry/TableInfo/TableName');
-    if (tableName.size > 0) {
+    if (tableName && tableName.size > 0) {
         details.tableName = tableName.content.toString('utf8');
     }
 
     if (!details.tableName) details.tableName = filename.substring(0, filename.length - 4);
 
     let tableVersion = CFB.find(cfb, 'Root Entry/TableInfo/TableVersion');
-    if (tableVersion.size > 0) {
+    if (tableVersion && tableVersion.size > 0) {
         details.tableVersion = tableVersion.content.toString('utf8');
     }
 
@@ -69,7 +71,7 @@ const getVPXTableDetails = (filename) => {
     if (!details.tableSaveDate) {
         tableSaveDate = CFB.find(cfb, 'Root Entry/TableInfo/ReleaseDate');
         if (tableSaveDate && tableSaveDate.size > 0) {
-            details.tableSaveDate = dateParser.fromString(tableSaveDate.content.toString('utf8'));
+            details.tableSaveDate = tableSaveDate.content.toString('utf8');
         }
     }
 
