@@ -30,6 +30,8 @@ const listVPXTableFiles = () => {
 
 const getVPXTableDetails = (filename) => {
 
+    const fullPath = path.join(TABLES_FOLDER, filename);
+
     console.log('Getting details for %s', filename);
 
     const details = {
@@ -37,7 +39,7 @@ const getVPXTableDetails = (filename) => {
     };
 
 
-    let cfb = CFB.read(path.join(TABLES_FOLDER, filename), { type: 'file' });
+    let cfb = CFB.read(fullPath, { type: 'file' });
 
     //console.log(cfb);
 
@@ -75,7 +77,7 @@ const getVPXTableDetails = (filename) => {
         }
     }
 
-    details.tableFileCreateDate = fs.statSync(filename).birthtime.toISOString();
+    details.tableFileCreateDate = fs.statSync(fullPath).birthtime.toISOString();
 
     return details;
 
